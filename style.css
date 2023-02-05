@@ -33,12 +33,13 @@ body{
     background-color: hsl(234, 39%, 85%);
     border-right: 8px;
     border-color:  hsl(235, 21%, 11%);
+    padding: 2px 23px;
 }
 .input-field:focus-visible{
     border: none;
 }
 .input-field::placeholder{
-    padding: 5px 25px;
+    padding: 5px 2px;
 }
 .checked{
     position: absolute;
@@ -62,6 +63,7 @@ p{
 }
 .right {
     display: flex;
+    width: 300px;
 }
 button {
     height: 39px;
