@@ -10,7 +10,7 @@ var TodoRoute = func(router mux.Router) {
 	router.HandleFunc("/todo", controllers.GetTodo).Methods("GET") //fetch
 	router.HandleFunc("/todo/{todoId}", controllers.GetTodoById).Methods("GET")
 	router.HandleFunc("/todo/{todoId}", controllers.UpdateTodo).Methods("PUT")
-	router.HandleFunc("/todo/{todoId}", controllers.Delete).Methods("DELETE")
+	router.HandleFunc("/todo/{todoId}", controllers.DeleteTodo).Methods("DELETE")
 }
 
 func main() {
