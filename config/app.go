@@ -1,18 +1,40 @@
 package config
 
-import "github.com/jinzhu/gorm"
-
-var (
-	db *gorm.DB
+import (
+	"database/sql"
+	"log"
 )
 
-func Connect() {
-	d, err := gorm.Open("mysql", "ope:opeyemi123/opetable?charset=uft8&parseTime=True&loc=local")
+func main() {
+	db, err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/tododb")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	db = d
+	defer db.Close()
+
+	//create table
+	query := `CREATE TABLE IF NOT EXISTS todos (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		description VARCHAR(255) NOT NULL,
+		completed BOOLEAN NOT NULL DEFAULT false
+	);`
+	_, err := db.Query("SELECT * FROM todos")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
-func GetDB() *gorm.DB {
-	return db
-}
+
+//var (
+//	db *gorm.DB
+//)
+//
+//func Connect() {
+//	d, err := gorm.Open("mysql", "ope:opeyemi123/opetable?charset=uft8&parseTime=True&loc=local")
+//	if err != nil {
+//		panic(err)
+//	}
+//	db = d
+//}
+//func GetDB() *gorm.DB {
+//	return db
+//}

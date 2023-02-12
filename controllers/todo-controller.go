@@ -9,5 +9,4 @@ var NewTodo models.Todo
 
 func CreateTodo(w http.ResponseWriter, r *http.Request) {
 	CreateTodo := &models.Todo{}
-
 }
