@@ -18,10 +18,11 @@ func main() {
 		description VARCHAR(255) NOT NULL,
 		completed BOOLEAN NOT NULL DEFAULT false
 	);`
-	_, err := db.Query("SELECT * FROM todos")
+	_, err = db.Query("SELECT * FROM todos")
 	if err != nil {
 		log.Fatal(err)
 	}
+
 }
 
 //var (
