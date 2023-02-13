@@ -2,6 +2,7 @@ package config
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 )
 
@@ -12,12 +13,19 @@ func main() {
 	}
 	defer db.Close()
 
+	pingErr := db.Ping()
+	if pingErr != nil {
+		log.Fatal(pingErr)
+	}
+	fmt.Println("Connected!")
+
 	//create table
 	query := `CREATE TABLE IF NOT EXISTS todos (
 		id INT AUTO_INCREMENT PRIMARY KEY,
-		description VARCHAR(255) NOT NULL,
+		title VARCHAR(255) NOT NULL,
 		completed BOOLEAN NOT NULL DEFAULT false
 	);`
+	
 	_, err = db.Query("SELECT * FROM todos")
 	if err != nil {
 		log.Fatal(err)
