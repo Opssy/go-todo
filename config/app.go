@@ -25,11 +25,18 @@ func main() {
 		title VARCHAR(255) NOT NULL,
 		completed BOOLEAN NOT NULL DEFAULT false
 	);`
-	
-	_, err = db.Query("SELECT * FROM todos")
+
+	_, err = db.Exec(query)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// Insert a todo item
+	stmt, err := db.Prepare("INSERT INTO todos (title) VALUES (?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
 
 }
 
