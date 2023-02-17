@@ -1,22 +1,23 @@
 package models
 
 import (
+	"database/sql"
 	"github.com/jinzhu/gorm"
+	"go-todo/config"
 )
 
-var db *gorm.DB
+var db *sql.DB
 
 type Todo struct {
-	gorm.Model
 	ID        string `gorm: " "json:"id"`
 	Title     string `gorm: ""json:"title"`
 	Completed bool   `gorm: ""json:"completed"`
 }
 
 func init() {
-	//config.main()
-	//db = config.GetDB()
-	//db.AutoMigrate(&Todo{})
+	config.Main()
+	db = config.GetDB()
+	db.AutoMigrate(&Todo{})
 }
 
 func (t *Todo) CreateTodo() *Todo {
