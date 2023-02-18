@@ -41,6 +41,9 @@ func Main() {
 	defer stmt.Close()
 
 }
+func GetDB() *sql.DB {
+	return db
+}
 
 //var (
 //	db *gorm.DB
