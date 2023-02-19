@@ -6,7 +6,9 @@ import (
 	"log"
 )
 
-func main() {
+var db *sql.DB
+
+func Main() {
 	db, err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/tododb")
 	if err != nil {
 		log.Fatal(err)
@@ -38,6 +40,9 @@ func main() {
 	}
 	defer stmt.Close()
 
+}
+func GetDB() *sql.DB {
+	return db
 }
 
 //var (
