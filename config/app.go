@@ -6,9 +6,7 @@ import (
 	"log"
 )
 
-var db *sql.DB
-
-func Main() {
+func Main() *sql.DB {
 	db, err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/tododb")
 	if err != nil {
 		log.Fatal(err)
@@ -20,23 +18,28 @@ func Main() {
 		log.Fatal(pingErr)
 	}
 	fmt.Println("Connected!")
+	//create db
+	_, err = db.Exec(`CREATE Database todo`)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//query db
+	_, err = db.Exec(`USE todo`)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// create table
+	_, err = db.Exec(`
+		CREATE TABLE todos (
+		    id INT AUTO_INCREMENT,
+		    title TEXT NOT NULL,
+		    completed BOOLEAN DEFAULT FALSE,
+		    PRIMARY KEY (id)
+		);
+	`)
 
-}
-func GetDB() *sql.DB {
+	if err != nil {
+		fmt.Println(err)
+	}
 	return db
 }
-
-//var (
-//	db *gorm.DB
-//)
-//
-//func Connect() {
-//	d, err := gorm.Open("mysql", "ope:opeyemi123/opetable?charset=uft8&parseTime=True&loc=local")
-//	if err != nil {
-//		panic(err)
-//	}
-//	db = d
-//}
-//func GetDB() *gorm.DB {
-//	return db
-//}
