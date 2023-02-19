@@ -21,25 +21,6 @@ func Main() {
 	}
 	fmt.Println("Connected!")
 
-	//create table
-	query := `CREATE TABLE IF NOT EXISTS todos (
-		id INT AUTO_INCREMENT PRIMARY KEY,
-		title VARCHAR(255) NOT NULL,
-		completed BOOLEAN NOT NULL DEFAULT false
-	);`
-
-	_, err = db.Exec(query)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Insert a todo item
-	stmt, err := db.Prepare("INSERT INTO todos (title) VALUES (?)")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer stmt.Close()
-
 }
 func GetDB() *sql.DB {
 	return db
