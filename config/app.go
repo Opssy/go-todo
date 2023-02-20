@@ -6,9 +6,7 @@ import (
 	"log"
 )
 
-var db *sql.DB
-
-func Main() {
+func Main() *sql.DB {
 	db, err := sql.Open("mysql", "root:password@tcp(127.0.0.1:3306)/tododb")
 	if err != nil {
 		log.Fatal(err)
@@ -20,42 +18,28 @@ func Main() {
 		log.Fatal(pingErr)
 	}
 	fmt.Println("Connected!")
-
-	//create table
-	query := `CREATE TABLE IF NOT EXISTS todos (
-		id INT AUTO_INCREMENT PRIMARY KEY,
-		title VARCHAR(255) NOT NULL,
-		completed BOOLEAN NOT NULL DEFAULT false
-	);`
-
-	_, err = db.Exec(query)
+	//create db
+	_, err = db.Exec(`CREATE Database todo`)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// Insert a todo item
-	stmt, err := db.Prepare("INSERT INTO todos (title) VALUES (?)")
+	//query db
+	_, err = db.Exec(`USE todo`)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer stmt.Close()
+	// create table
+	_, err = db.Exec(`
+		CREATE TABLE todos (
+		    id INT AUTO_INCREMENT,
+		    title TEXT NOT NULL,
+		    completed BOOLEAN DEFAULT FALSE,
+		    PRIMARY KEY (id)
+		);
+	`)
 
-}
-func GetDB() *sql.DB {
+	if err != nil {
+		fmt.Println(err)
+	}
 	return db
 }
-
-//var (
-//	db *gorm.DB
-//)
-//
-//func Connect() {
-//	d, err := gorm.Open("mysql", "ope:opeyemi123/opetable?charset=uft8&parseTime=True&loc=local")
-//	if err != nil {
-//		panic(err)
-//	}
-//	db = d
-//}
-//func GetDB() *gorm.DB {
-//	return db
-//}
