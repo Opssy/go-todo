@@ -35,6 +35,11 @@ func Display(w http.ResponseWriter, r *http.Request) {
 
 		todos = append(todos, todo)
 	}
+	data := models.View{
+		Todos: todos,
+	}
+
+	_ = view.Execute(w, data)
 }
 
 //var NewTodo models.Todo
